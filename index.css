@@ -1,0 +1,23 @@
+.stats {
+  padding: 8px;
+  border-radius: 5px;
+  margin-top: 20px;
+  background-color: #ffffff78;
+}
+
+.stats, .stats > .stat {
+  display: block;
+  clear: left;
+  float: left;
+}
+
+.stats > .stat {
+  margin: none;
+  border: none;
+}
+.stats > .stat * {
+  border: initial;
+}
+.stats > .stat > .title {
+  margin-right: 10px;
+}
