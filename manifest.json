@@ -1,0 +1,12 @@
+{
+    "name": "Showdown Stat Tool",
+    "description": "Allows you to view stats on Pokemon Showdown",
+    "version": "1",
+    "permissions": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
+    "content_scripts": [{
+      "matches": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
+      "js": ["index.js"],
+      "css": ["index.css"]
+    }],
+    "manifest_version":2
+}
