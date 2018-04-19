@@ -2,7 +2,6 @@ const content = `console.log('Showdown Stats Tool Starting Up')
 
 // CORE FUNCTIONS
 function setActivePokemon(pokemon, statsDiv, side) {
-  console.log('pds', pokemon, statsDiv, side)
   const statDivs = Array.from(statsDiv.childNodes).filter(node => node.className.includes('stats'))
   if (statDivs.length > 1) return
   if (statDivs.length > 0) {
@@ -32,7 +31,6 @@ function setActivePokemon(pokemon, statsDiv, side) {
 }
 
 function statDivClicked(div, event, tryNumber = 0) {
-  console.log('clicked', event)
   if (tryNumber > 5) return
   if (!window.room) return setTimeout(statDivClicked.bind(null,div,event,tryNumber + 1), 100)
   const {
@@ -54,7 +52,6 @@ function statDivClicked(div, event, tryNumber = 0) {
 }
 
 function setupExistingStatDivs() {
-  console.log(Array.from(document.getElementsByClassName('statbar')))
   Array.from(document.getElementsByClassName('statbar')).forEach(element => {
     setupStatDiv(element)
   })
