@@ -1,23 +1,49 @@
-.stats {
+.showdown-stats {
   padding: 8px;
   border-radius: 5px;
   margin-top: 20px;
   background-color: #ffffff78;
+  width: max-content;
 }
 
-.stats, .stats > .stat {
+.showdown-stats {
+  z-index: 10000;
+  max-height: 150px;
+  overflow-y: auto;
   display: block;
   clear: left;
   float: left;
 }
+.showdown-stats, .showdown-stats * {
+  border: none !important;
+}
+.showdown-stats > * {
+  display: inline-block;
+  float: left;
+}
 
-.stats > .stat {
-  margin: none;
-  border: none;
-}
-.stats > .stat * {
-  border: initial;
-}
-.stats > .stat > .title {
+.showdown-stats > * > * > *:first-child {
   margin-right: 10px;
+}
+.showdown-stats > * > * {
+  padding: 2px;
+}
+
+.showdown-stats .type {
+  border-radius: 4px;
+}
+.showdown-stats .type.times2 {
+  background-color: #85ff85ba;
+}
+.showdown-stats .type.times4 {
+  background-color: #00fdffd6;
+}
+.showdown-stats .type.times0 {
+  background-color: #7d7c98c9;
+}
+.showdown-stats .type.times0-5 {
+  background-color: #ff545487;
+}
+.showdown-stats .type.times0-25 {
+  background-color: #ff0000bd;
 }
