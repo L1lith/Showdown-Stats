@@ -2,11 +2,22 @@
   console.log('Showdown Stats Tool Starting Up')
 
   // CORE FUNCTIONS
-  function setActivePokemon(pokemon, statsDiv, side) {
-    const statDivs = Array.from(statsDiv.childNodes).filter(node => node.className.includes('stats'))
-    if (statDivs.length > 1) return
+  function getPokemonFromStatbar(statbar) {
+  	if (!(statbar instanceof HTMLElement) || !(statbar.className || "").includes('statbar')) throw 'Invalid Statbar'
+  	const {sides} = window.room.battle
+  	return (sides[0].active.concat(sides[1].active)).find(pokemon => pokemon !== null && (typeof pokemon.statbarElem == 'object' ? pokemon.statbarElem.toArray() : []).includes(statbar)) || null
+  }
+function standardStat(base, level=100, EV=0, IV=31, nature=1) {
+  return Math.floor(Math.floor(((IV + base * 2 + EV / 4) * level / 100 + 5)) * nature)
+}
+function HPStat(base, level=100, EV=0, IV=31) {
+  if (base === 1) return 1
+  return Math.floor((IV + base * 2 + EV / 4) * level / 100 + 10 + level)
+}
+  function setActivePokemon(pokemon, statbar, side) {
+    const statDivs = Array.from(statbar.childNodes).filter(node => node.className.includes('stats'))
     if (statDivs.length > 0) {
-      statDivs[0].parentNode.removeChild(statDivs[0])
+      statDivs.forEach(statDiv => statDiv.parentNode.removeChild(statDiv))
       return
     }
     const showdownStatsElement = createElement('div', {
@@ -26,10 +37,16 @@
         parent: statDiv,
         content: stat
       })
+      const statRange = []
+      if (stat.toLowerCase() === 'hp') {
+        statRange.push(HPStat(pokemon.baseStats[stat], pokemon.level),HPStat(pokemon.baseStats[stat], pokemon.level, 255))
+      } else {
+        statRange.push(standardStat(pokemon.baseStats[stat], pokemon.level),standardStat(pokemon.baseStats[stat], pokemon.level, 255))
+      }
       const value = createElement('span', {
         class: 'value',
         below: title,
-        content: pokemon.baseStats[stat].toString()
+        content: statRange[0].toString()+'-'+statRange[1].toString()
       })
     })
     const effectiveness = createElement('div', {
@@ -53,38 +70,25 @@
         parent: typeElement
       })
     })
-    statsDiv.appendChild(showdownStatsElement)
+    statbar.appendChild(showdownStatsElement)
   }
 
-  function statDivClicked(div, event, tryNumber = 0) {
+  function statbarClicked(statbar, event, tryNumber = 0) {
     if (tryNumber > 5) return
-    if (!window.room) return setTimeout(statDivClicked.bind(null,div,event,tryNumber + 1), 100)
-    const {
-      className
-    } = div
-    if (typeof className != 'string' || className.length < 1) return
-    let side
-    if (className.includes('lstatbar')) {
-      side = 1
-    } else if (className.includes('rstatbar')) {
-      side = 0
-    } else {
-      return
-    }
-    side = window.room.battle.sides[side]
-    let selectedPokemon = side.active.filter(pokemon => Array.from(pokemon.statbarElem).includes(div))
-    if (selectedPokemon.length != 1) return
-    setActivePokemon(selectedPokemon[0], div, side)
+    if (!window.room) return setTimeout(statDivClicked.bind(null,statbar,event,tryNumber + 1), 100)
+    const pokemon = getPokemonFromStatbar(statbar)
+    if (pokemon === null) return
+    setActivePokemon(pokemon, statbar, pokemon.side)
   }
 
-  function setupExistingStatDivs() {
+  function setupExistingStatbars() {
     Array.from(document.getElementsByClassName('statbar')).forEach(element => {
-      setupStatDiv(element)
+      setupStatbar(element)
     })
   }
 
-  function setupStatDiv(statDiv) {
-    statDiv.addEventListener('click', statDivClicked.bind(null, statDiv))
+  function setupStatbar(statbar) {
+    statbar.addEventListener('click', statbarClicked.bind(null, statbar))
   }
 
   function mutationWatcher(records) {
@@ -92,8 +96,8 @@
   }
 
   function onMutationRecord(mutationRecord) {
-    Array.from(mutationRecord.addedNodes).filter(node => node.className && node.className.includes('statbar')).forEach(statDiv => {
-      setupStatDiv(statDiv)
+    Array.from(mutationRecord.addedNodes).filter(node => node.className && node.className.includes('statbar')).forEach(statbar => {
+      setupStatbar(statbar)
     })
   }
 
@@ -102,7 +106,7 @@
         childList: true,
         subtree: true
       })
-      setupExistingStatDivs()
+      setupExistingStatbars()
   }
 
   // MISC FUNCTIONS
