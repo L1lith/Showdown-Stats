@@ -1,18 +1,4 @@
-const content = `// (() => {
-// 	const output = {}
-// 	const nameMap = {};
-// 	[...table.children].slice(1).map(tr => [...tr.children].map(child => child.innerText)).map(arr => arr.map(elem => elem === 'None' ? null : elem.toLowerCase().split('.').join(''))).forEach(([stat, increase, decrease])=>{
-// 		stat = nameMap[stat] || stat
-// 		increase = nameMap[increase] || increase
-// 		decrease = nameMap[decrease] || decrease
-// 		output[stat] = [increase, decrease]
-// 	})
-// 	return output
-// })()
-//
-// https://gamefaqs.gamespot.com/3ds/696960-pokemon-y/faqs/68759
-
-(() => {
+const content = `(() => {
   console.log('Showdown Stats Tool Starting Up')
 
   // CORE FUNCTIONS
@@ -50,6 +36,7 @@ function sortStats(statsArray) {
 			content: 'Stats'
 		})
     sortStats(Object.keys(pokemon.baseStats)).forEach(stat => {
+			stat = stat.toLowerCase()
       const statDiv = createElement('div', {
         class: 'stat',
         parent: stats
@@ -60,10 +47,10 @@ function sortStats(statsArray) {
         content: stat.toUpperCase()
       })
       const statRange = []
-      if (stat.toLowerCase() === 'hp') {
+      if (stat === 'hp') {
         statRange.push(HPStat(pokemon.baseStats[stat], pokemon.level),HPStat(pokemon.baseStats[stat], pokemon.level, 255))
       } else {
-        statRange.push(standardStat(pokemon.baseStats[stat], pokemon.level),standardStat(pokemon.baseStats[stat], pokemon.level, 255))
+        statRange.push(standardStat(pokemon.baseStats[stat], pokemon.level),standardStat(pokemon.baseStats[stat], pokemon.level, 255, typeof pokemon.nature == 'string' ? getNatureFactor(pokemon.nature, stat) : 1))
       }
       const value = createElement('span', {
         class: 'value',
@@ -161,7 +148,19 @@ function sortStats(statsArray) {
     }
     return element
   }
-
+	function getNatureFactor(nature, stat) {
+		if (!NatureChart.hasOwnProperty(nature)) throw 'Invalid Nature'
+		if (typeof stat != 'string' || stat.length < 1) throw 'Invalid Stat'
+		stat = stat.toLowerCase()
+		const [increase, decrease] = NatureChart[nature]
+		if (stat === increase) {
+			return 1.1
+		} else if (stat === decrease) {
+			return 0.9
+		} else {
+			return 1
+		}
+	}
   function getEffectiveness(pokemon) {
   	if (typeof window.Pokemon == 'function' && !(pokemon instanceof window.Pokemon)) throw 'Input Not Pokemon'
   	const {types} = pokemon
@@ -184,7 +183,8 @@ function sortStats(statsArray) {
   }
 
   // DATA
-  TypeChart = JSON.parse('{"Ghost":{"Normal":0,"Fighting":0,"Poison":0.5,"Bug":0.5,"Ghost":2,"Dark":2},"Rock":{"Normal":0.5,"Fire":0.5,"Water":2,"Grass":2,"Fighting":2,"Poison":0.5,"Ground":2,"Flying":0.5,"Steel":2},"Steel":{"Normal":0.5,"Fire":2,"Grass":0.5,"Ice":0.5,"Fighting":2,"Poison":0,"Ground":2,"Flying":0.5,"Psychic":0.5,"Bug":0.5,"Rock":0.5,"Dragon":0.5,"Steel":0.5,"Fairy":0.5},"Fire":{"Fire":0.5,"Water":2,"Grass":0.5,"Ice":0.5,"Ground":2,"Bug":0.5,"Rock":2,"Steel":0.5,"Fairy":0.5},"Water":{"Fire":0.5,"Water":0.5,"Electric":2,"Grass":2,"Ice":0.5,"Steel":0.5},"Dragon":{"Fire":0.5,"Water":0.5,"Electric":0.5,"Grass":0.5,"Ice":2,"Dragon":2,"Fairy":2},"Grass":{"Fire":2,"Water":0.5,"Electric":0.5,"Grass":0.5,"Ice":2,"Poison":2,"Ground":0.5,"Flying":2,"Bug":2},"Ice":{"Fire":2,"Ice":0.5,"Fighting":2,"Rock":2,"Steel":2},"Bug":{"Fire":2,"Grass":0.5,"Fighting":0.5,"Ground":0.5,"Flying":2,"Rock":2},"Ground":{"Water":2,"Electric":0,"Grass":2,"Ice":2,"Poison":0.5,"Rock":0.5},"Electric":{"Electric":0.5,"Ground":2,"Flying":0.5,"Steel":0.5},"Flying":{"Electric":2,"Grass":0.5,"Ice":2,"Fighting":0.5,"Ground":0,"Bug":0.5,"Rock":2},"Poison":{"Grass":0.5,"Fighting":0.5,"Poison":0.5,"Ground":2,"Psychic":2,"Bug":0.5,"Fairy":0.5},"Psychic":{"Fighting":0.5,"Psychic":0.5,"Bug":2,"Ghost":2,"Dark":2},"Fairy":{"Fighting":0.5,"Poison":2,"Bug":0.5,"Dragon":0,"Dark":0.5,"Steel":2},"Normal":{"Fighting":2,"Ghost":0},"Dark":{"Fighting":2,"Psychic":0,"Bug":2,"Ghost":0.5,"Dark":0.5,"Fairy":2},"Fighting":{"Flying":2,"Psychic":2,"Bug":0.5,"Rock":0.5,"Dark":0.5,"Fairy":2}}')
+  const TypeChart = JSON.parse('{"Ghost":{"Normal":0,"Fighting":0,"Poison":0.5,"Bug":0.5,"Ghost":2,"Dark":2},"Rock":{"Normal":0.5,"Fire":0.5,"Water":2,"Grass":2,"Fighting":2,"Poison":0.5,"Ground":2,"Flying":0.5,"Steel":2},"Steel":{"Normal":0.5,"Fire":2,"Grass":0.5,"Ice":0.5,"Fighting":2,"Poison":0,"Ground":2,"Flying":0.5,"Psychic":0.5,"Bug":0.5,"Rock":0.5,"Dragon":0.5,"Steel":0.5,"Fairy":0.5},"Fire":{"Fire":0.5,"Water":2,"Grass":0.5,"Ice":0.5,"Ground":2,"Bug":0.5,"Rock":2,"Steel":0.5,"Fairy":0.5},"Water":{"Fire":0.5,"Water":0.5,"Electric":2,"Grass":2,"Ice":0.5,"Steel":0.5},"Dragon":{"Fire":0.5,"Water":0.5,"Electric":0.5,"Grass":0.5,"Ice":2,"Dragon":2,"Fairy":2},"Grass":{"Fire":2,"Water":0.5,"Electric":0.5,"Grass":0.5,"Ice":2,"Poison":2,"Ground":0.5,"Flying":2,"Bug":2},"Ice":{"Fire":2,"Ice":0.5,"Fighting":2,"Rock":2,"Steel":2},"Bug":{"Fire":2,"Grass":0.5,"Fighting":0.5,"Ground":0.5,"Flying":2,"Rock":2},"Ground":{"Water":2,"Electric":0,"Grass":2,"Ice":2,"Poison":0.5,"Rock":0.5},"Electric":{"Electric":0.5,"Ground":2,"Flying":0.5,"Steel":0.5},"Flying":{"Electric":2,"Grass":0.5,"Ice":2,"Fighting":0.5,"Ground":0,"Bug":0.5,"Rock":2},"Poison":{"Grass":0.5,"Fighting":0.5,"Poison":0.5,"Ground":2,"Psychic":2,"Bug":0.5,"Fairy":0.5},"Psychic":{"Fighting":0.5,"Psychic":0.5,"Bug":2,"Ghost":2,"Dark":2},"Fairy":{"Fighting":0.5,"Poison":2,"Bug":0.5,"Dragon":0,"Dark":0.5,"Steel":2},"Normal":{"Fighting":2,"Ghost":0},"Dark":{"Fighting":2,"Psychic":0,"Bug":2,"Ghost":0.5,"Dark":0.5,"Fairy":2},"Fighting":{"Flying":2,"Psychic":2,"Bug":0.5,"Rock":0.5,"Dark":0.5,"Fairy":2}}')
+	const NatureChart = JSON.parse('{"hardy":[null,null],"lonely":["atk","lonely"],"brave":["atk","spe"],"adamant":["atk","spa"],"naughty":["atk","spd"],"bold":["def","atk"],"docile":[null,null],"relaxed":["def","spe"],"impish":["def","spa"],"lax":["def","spd"],"timid":["spe","atk"],"hasty":["spe","def"],"serious":[null,null],"jolly":["spe","spa"],"naive":["spe","sp defense"],"modest":["spa","atk"],"mild":["spa","def"],"quiet":["spa","spd"],"bashful":[null,null],"rash":["spa","spd"],"calm":["spd","atk"],"gentle":["spd","def"],"sassy":["spdefense","spe"],"careful":["spd","spa"],"quirky":[null,null]}')
 
   // RUN
 
