@@ -1,18 +1,13 @@
 .showdown-stats {
-  padding: 8px;
+  transform: translate(-20%);
+  padding: 0px 5px 5px 5px;
   border-radius: 5px;
   margin-top: 20px;
   background-color: #ffffff78;
   width: max-content;
-}
-
-.showdown-stats {
   z-index: 10000;
   max-height: 150px;
   overflow-y: auto;
-  display: block;
-  clear: left;
-  float: left;
 }
 .showdown-stats, .showdown-stats * {
   border: none !important;
@@ -23,10 +18,14 @@
 }
 
 .showdown-stats > * > * > *:first-child {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 .showdown-stats > * > * {
   padding: 2px;
+}
+
+.showdown-stats > * > h3:first-child {
+  margin: 0;
 }
 
 .showdown-stats .type {

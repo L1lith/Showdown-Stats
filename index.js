@@ -1,4 +1,18 @@
-const content = `(() => {
+const content = `// (() => {
+// 	const output = {}
+// 	const nameMap = {};
+// 	[...table.children].slice(1).map(tr => [...tr.children].map(child => child.innerText)).map(arr => arr.map(elem => elem === 'None' ? null : elem.toLowerCase().split('.').join(''))).forEach(([stat, increase, decrease])=>{
+// 		stat = nameMap[stat] || stat
+// 		increase = nameMap[increase] || increase
+// 		decrease = nameMap[decrease] || decrease
+// 		output[stat] = [increase, decrease]
+// 	})
+// 	return output
+// })()
+//
+// https://gamefaqs.gamespot.com/3ds/696960-pokemon-y/faqs/68759
+
+(() => {
   console.log('Showdown Stats Tool Starting Up')
 
   // CORE FUNCTIONS
@@ -14,6 +28,10 @@ function HPStat(base, level=100, EV=0, IV=31) {
   if (base === 1) return 1
   return Math.floor((IV + base * 2 + EV / 4) * level / 100 + 10 + level)
 }
+const preferredStatOrder = ['spe', 'hp', 'atk', 'def', 'spa', 'spd']
+function sortStats(statsArray) {
+	return statsArray.sort((a,b) => preferredStatOrder.indexOf(a) - preferredStatOrder.indexOf(b))
+}
   function setActivePokemon(pokemon, statbar, side) {
     const statDivs = Array.from(statbar.childNodes).filter(node => node.className.includes('stats'))
     if (statDivs.length > 0) {
@@ -27,7 +45,11 @@ function HPStat(base, level=100, EV=0, IV=31) {
       class: 'stats',
       parent: showdownStatsElement
     })
-    Object.keys(pokemon.baseStats).forEach(stat => {
+		createElement('h3', {
+			parent: stats,
+			content: 'Stats'
+		})
+    sortStats(Object.keys(pokemon.baseStats)).forEach(stat => {
       const statDiv = createElement('div', {
         class: 'stat',
         parent: stats
@@ -35,7 +57,7 @@ function HPStat(base, level=100, EV=0, IV=31) {
       const title = createElement('span', {
         class: 'title',
         parent: statDiv,
-        content: stat
+        content: stat.toUpperCase()
       })
       const statRange = []
       if (stat.toLowerCase() === 'hp') {
@@ -53,6 +75,10 @@ function HPStat(base, level=100, EV=0, IV=31) {
       class: 'effectiveness',
       parent: showdownStatsElement
     })
+		createElement('h3', {
+			parent: effectiveness,
+			content: 'Effectiveness'
+		})
     const effectivenessChart = getEffectiveness(pokemon)
     Object.keys(effectivenessChart).forEach(type => {
       const typeElement = createElement('div', {
