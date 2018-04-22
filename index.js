@@ -126,14 +126,6 @@ function sortStats(statsArray) {
     })
   }
 
-  function run() {
-      (new MutationObserver(mutationWatcher)).observe(document.body, {
-        childList: true,
-        subtree: true
-      })
-      setupExistingStatbars()
-  }
-
   // MISC FUNCTIONS
 
   function createElement(type = 'div', options = {}) {
@@ -200,7 +192,11 @@ function sortStats(statsArray) {
 
   // RUN
 
-  run()
+	(new MutationObserver(mutationWatcher)).observe(document.body, {
+		childList: true,
+		subtree: true
+	})
+	setupExistingStatbars()
 
 })()
 `

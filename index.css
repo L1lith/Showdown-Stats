@@ -28,7 +28,7 @@
   margin: 0;
 }
 
-.showdown-stats .type {
+.showdown-stats > * > * {
   border-radius: 4px;
 }
 .showdown-stats .type.times2, .showdown-stats .stat.raised {
