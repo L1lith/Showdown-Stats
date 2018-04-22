@@ -62,7 +62,8 @@ function sortStats(statsArray) {
 			if (stat === 'hp') {
         statRange = [HPStat(pokemon.baseStats[stat], pokemon.level),HPStat(pokemon.baseStats[stat], pokemon.level, 255)]
       } else {
-        statRange = [standardStat(pokemon.baseStats[stat], pokemon.level) * statFactor,standardStat(pokemon.baseStats[stat], pokemon.level, 255, typeof pokemon.nature == 'string' ? getNatureFactor(pokemon.nature, stat) : 1) * statFactor]
+        statRange = [standardStat(pokemon.baseStats[stat], pokemon.level), standardStat(pokemon.baseStats[stat], pokemon.level, 255, typeof pokemon.nature == 'string' ? getNatureFactor(pokemon.nature, stat) : 1)]
+				statRange = statRange.map(value => value * statFactor)
       }
 			statRange = statRange.map(value => Math.floor(value))
       const value = createElement('span', {
@@ -189,7 +190,7 @@ function sortStats(statsArray) {
 
   // DATA
   const TypeChart = JSON.parse('{"Ghost":{"Normal":0,"Fighting":0,"Poison":0.5,"Bug":0.5,"Ghost":2,"Dark":2},"Rock":{"Normal":0.5,"Fire":0.5,"Water":2,"Grass":2,"Fighting":2,"Poison":0.5,"Ground":2,"Flying":0.5,"Steel":2},"Steel":{"Normal":0.5,"Fire":2,"Grass":0.5,"Ice":0.5,"Fighting":2,"Poison":0,"Ground":2,"Flying":0.5,"Psychic":0.5,"Bug":0.5,"Rock":0.5,"Dragon":0.5,"Steel":0.5,"Fairy":0.5},"Fire":{"Fire":0.5,"Water":2,"Grass":0.5,"Ice":0.5,"Ground":2,"Bug":0.5,"Rock":2,"Steel":0.5,"Fairy":0.5},"Water":{"Fire":0.5,"Water":0.5,"Electric":2,"Grass":2,"Ice":0.5,"Steel":0.5},"Dragon":{"Fire":0.5,"Water":0.5,"Electric":0.5,"Grass":0.5,"Ice":2,"Dragon":2,"Fairy":2},"Grass":{"Fire":2,"Water":0.5,"Electric":0.5,"Grass":0.5,"Ice":2,"Poison":2,"Ground":0.5,"Flying":2,"Bug":2},"Ice":{"Fire":2,"Ice":0.5,"Fighting":2,"Rock":2,"Steel":2},"Bug":{"Fire":2,"Grass":0.5,"Fighting":0.5,"Ground":0.5,"Flying":2,"Rock":2},"Ground":{"Water":2,"Electric":0,"Grass":2,"Ice":2,"Poison":0.5,"Rock":0.5},"Electric":{"Electric":0.5,"Ground":2,"Flying":0.5,"Steel":0.5},"Flying":{"Electric":2,"Grass":0.5,"Ice":2,"Fighting":0.5,"Ground":0,"Bug":0.5,"Rock":2},"Poison":{"Grass":0.5,"Fighting":0.5,"Poison":0.5,"Ground":2,"Psychic":2,"Bug":0.5,"Fairy":0.5},"Psychic":{"Fighting":0.5,"Psychic":0.5,"Bug":2,"Ghost":2,"Dark":2},"Fairy":{"Fighting":0.5,"Poison":2,"Bug":0.5,"Dragon":0,"Dark":0.5,"Steel":2},"Normal":{"Fighting":2,"Ghost":0},"Dark":{"Fighting":2,"Psychic":0,"Bug":2,"Ghost":0.5,"Dark":0.5,"Fairy":2},"Fighting":{"Flying":2,"Psychic":2,"Bug":0.5,"Rock":0.5,"Dark":0.5,"Fairy":2}}')
-	const NatureChart = JSON.parse('{"hardy":[null,null],"lonely":["atk","lonely"],"brave":["atk","spe"],"adamant":["atk","spa"],"naughty":["atk","spd"],"bold":["def","atk"],"docile":[null,null],"relaxed":["def","spe"],"impish":["def","spa"],"lax":["def","spd"],"timid":["spe","atk"],"hasty":["spe","def"],"serious":[null,null],"jolly":["spe","spa"],"naive":["spe","sp defense"],"modest":["spa","atk"],"mild":["spa","def"],"quiet":["spa","spd"],"bashful":[null,null],"rash":["spa","spd"],"calm":["spd","atk"],"gentle":["spd","def"],"sassy":["spdefense","spe"],"careful":["spd","spa"],"quirky":[null,null]}');
+	const NatureChart = JSON.parse('{"hardy":[null,null],"lonely":["atk","def"],"brave":["atk","spe"],"adamant":["atk","spa"],"naughty":["atk","spd"],"bold":["def","atk"],"docile":[null,null],"relaxed":["def","spe"],"impish":["def","spa"],"lax":["def","spd"],"timid":["spe","atk"],"hasty":["spe","def"],"serious":[null,null],"jolly":["spe","spa"],"naive":["spe","spd"],"modest":["spa","atk"],"mild":["spa","def"],"quiet":["spa","spd"],"bashful":[null,null],"rash":["spa","spd"],"calm":["spd","atk"],"gentle":["spd","def"],"sassy":["spd","spe"],"careful":["spd","spa"],"quirky":[null,null]}');
 
   // RUN
 
