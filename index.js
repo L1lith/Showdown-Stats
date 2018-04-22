@@ -48,6 +48,7 @@ function sortStats(statsArray) {
     sortStats(Object.keys(pokemon.baseStats)).forEach(stat => {
 			stat = stat.toLowerCase()
       const statFactor = stat !== 'hp' && pokemon.boosts.hasOwnProperty(stat) ? statStageAsDecimal(pokemon.boosts[stat]) : 1
+			if (statFactor === 'spd' && pokemon.status === 'par') statFactor = statFactor * (window.room.battle.gen <= 7 ? 0.5 : 0.75)
 			const statDiv = createElement('div', {
         classes: ['stat', statFactor < 1 ? 'lowered' : statFactor > 1 ? 'raised' : undefined],
         parent: stats
