@@ -31,7 +31,7 @@
 .showdown-stats .type {
   border-radius: 4px;
 }
-.showdown-stats .type.times2 {
+.showdown-stats .type.times2, .showdown-stats .stat.raised {
   background-color: #85ff85ba;
 }
 .showdown-stats .type.times4 {
@@ -40,7 +40,7 @@
 .showdown-stats .type.times0 {
   background-color: #7d7c98c9;
 }
-.showdown-stats .type.times0-5 {
+.showdown-stats .type.times0-5, .showdown-stats .stat.lowered {
   background-color: #ff545487;
 }
 .showdown-stats .type.times0-25 {

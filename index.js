@@ -7,6 +7,16 @@ const content = `(() => {
   	const {sides} = window.room.battle
   	return (sides[0].active.concat(sides[1].active)).find(pokemon => pokemon !== null && (typeof pokemon.statbarElem == 'object' ? pokemon.statbarElem.toArray() : []).includes(statbar)) || null
   }
+	function statStageAsDecimal(stage){
+	if (typeof stage != 'number' || isNaN(stage) || !isFinite(stage) || stage % 1 !== 0 || stage > 6 || stage < -6) throw new Error('Invalid Stage Number')
+	if (stage > 0) {
+		return (stage + 2) / 2
+	} else if (stage < 0) {
+		return 2 / (-stage + 2)
+	} else {
+		return 1
+	}
+}
 function standardStat(base, level=100, EV=0, IV=31, nature=1) {
   return Math.floor(Math.floor(((IV + base * 2 + EV / 4) * level / 100 + 5)) * nature)
 }
@@ -37,8 +47,9 @@ function sortStats(statsArray) {
 		})
     sortStats(Object.keys(pokemon.baseStats)).forEach(stat => {
 			stat = stat.toLowerCase()
-      const statDiv = createElement('div', {
-        class: 'stat',
+      const statFactor = stat !== 'hp' && pokemon.boosts.hasOwnProperty(stat) ? statStageAsDecimal(pokemon.boosts[stat]) : 1
+			const statDiv = createElement('div', {
+        classes: ['stat', statFactor < 1 ? 'lowered' : statFactor > 1 ? 'raised' : undefined],
         parent: stats
       })
       const title = createElement('span', {
@@ -46,12 +57,13 @@ function sortStats(statsArray) {
         parent: statDiv,
         content: stat.toUpperCase()
       })
-      const statRange = []
-      if (stat === 'hp') {
-        statRange.push(HPStat(pokemon.baseStats[stat], pokemon.level),HPStat(pokemon.baseStats[stat], pokemon.level, 255))
+      let statRange = []
+			if (stat === 'hp') {
+        statRange = [HPStat(pokemon.baseStats[stat], pokemon.level),HPStat(pokemon.baseStats[stat], pokemon.level, 255)]
       } else {
-        statRange.push(standardStat(pokemon.baseStats[stat], pokemon.level),standardStat(pokemon.baseStats[stat], pokemon.level, 255, typeof pokemon.nature == 'string' ? getNatureFactor(pokemon.nature, stat) : 1))
+        statRange = [standardStat(pokemon.baseStats[stat], pokemon.level) * statFactor,standardStat(pokemon.baseStats[stat], pokemon.level, 255, typeof pokemon.nature == 'string' ? getNatureFactor(pokemon.nature, stat) : 1) * statFactor]
       }
+			statRange = statRange.map(value => Math.floor(value))
       const value = createElement('span', {
         class: 'value',
         below: title,
