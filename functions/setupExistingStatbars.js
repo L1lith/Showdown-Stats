@@ -1,3 +1,5 @@
+import setupStatbar from './setupStatbar'
+
 function setupExistingStatbars() {
   Array.from(document.getElementsByClassName('statbar')).forEach(element => {
     setupStatbar(element)

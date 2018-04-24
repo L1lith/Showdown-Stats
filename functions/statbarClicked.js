@@ -1,4 +1,5 @@
 import togglePokemonStats from './togglePokemonStats'
+import getPokemonFromStatbar from './getPokemonFromStatbar'
 
 function statbarClicked(statbar, event, tryNumber = 0) {
   if (tryNumber > 5) return

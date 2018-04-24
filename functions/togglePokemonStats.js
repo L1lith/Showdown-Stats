@@ -1,5 +1,9 @@
+import calculateHPStat from './calculateHPStat'
+import calculateStandardStat from './calculateStandardStat'
+import statStageToDecimal from './statStageToDecimal'
 import createElement from './createElement'
 import sortStats from './sortStats'
+import getEffectiveness from './getEffectiveness'
 
 function togglePokemonStats(pokemon, statbar, side) {
   const statDivs = Array.from(statbar.childNodes).filter(node => node.className.includes('stats'))
@@ -20,7 +24,7 @@ function togglePokemonStats(pokemon, statbar, side) {
   })
   sortStats(Object.keys(pokemon.baseStats)).forEach(stat => {
     stat = stat.toLowerCase()
-    const statFactor = stat !== 'hp' && pokemon.boosts.hasOwnProperty(stat) ? statStageAsDecimal(pokemon.boosts[stat]) : 1
+    const statFactor = stat !== 'hp' && pokemon.boosts.hasOwnProperty(stat) ? statStageToDecimal(pokemon.boosts[stat]) : 1
     if (statFactor === 'spd' && pokemon.status === 'par') statFactor *= window.room.battle.gen >= 7 ? 0.5 : 0.75
     const statDiv = createElement('div', {
       classes: ['stat', statFactor < 1 ? 'lowered' : statFactor > 1 ? 'raised' : undefined],
@@ -33,9 +37,9 @@ function togglePokemonStats(pokemon, statbar, side) {
     })
     let statRange = []
     if (stat === 'hp') {
-      statRange = [HPStat(pokemon.baseStats[stat], pokemon.level),HPStat(pokemon.baseStats[stat], pokemon.level, 255)]
+      statRange = [calculateHPStat(pokemon.baseStats[stat], pokemon.level),calculateHPStat(pokemon.baseStats[stat], pokemon.level, 255)]
     } else {
-      statRange = [standardStat(pokemon.baseStats[stat], pokemon.level), standardStat(pokemon.baseStats[stat], pokemon.level, 255, typeof pokemon.nature == 'string' ? getNatureFactor(pokemon.nature, stat) : 1)]
+      statRange = [calculateStandardStat(pokemon.baseStats[stat], pokemon.level), calculateStandardStat(pokemon.baseStats[stat], pokemon.level, 255, typeof pokemon.nature == 'string' ? getNatureFactor(pokemon.nature, stat) : 1)]
       statRange = statRange.map(value => value * statFactor)
     }
     statRange = statRange.map(value => Math.floor(value))
