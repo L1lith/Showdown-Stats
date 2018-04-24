@@ -5,7 +5,7 @@ module.exports = {
   entry: './index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'source.js'
+    filename: 'build.js'
   },
   resolve: {
     alias: {

@@ -5,8 +5,9 @@
     "permissions": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
     "content_scripts": [{
       "matches": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
-      "js": ["source.js"],
+      "js": ["launch.js"],
       "css": ["styles.css"]
     }],
+    "web_accessible_resources" : ["build.js"],
     "manifest_version":2
 }
