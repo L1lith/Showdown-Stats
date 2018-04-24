@@ -1,3 +1,5 @@
+import TypeChart from '@data/typeChart.json'
+
 function getEffectiveness(pokemon) {
   if (typeof window.Pokemon == 'function' && !(pokemon instanceof window.Pokemon)) throw 'Input Not Pokemon'
   const {types} = pokemon

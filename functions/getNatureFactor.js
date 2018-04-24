@@ -1,3 +1,5 @@
+import NatureChart from '@data/natureChart.json'
+
 function getNatureFactor(nature, stat) {
   if (!NatureChart.hasOwnProperty(nature)) throw 'Invalid Nature'
   if (typeof stat != 'string' || stat.length < 1) throw 'Invalid Stat'

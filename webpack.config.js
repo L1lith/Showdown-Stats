@@ -7,6 +7,11 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: 'source.js'
   },
+  resolve: {
+    alias: {
+      '@data': path.resolve(__dirname,'data')
+    }
+  },
   plugins: [
     new CopyWebpackPlugin([{ from: 'resources' }])
   ]
