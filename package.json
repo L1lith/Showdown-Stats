@@ -1,0 +1,30 @@
+{
+  "name": "showdown-stats",
+  "version": "1.0.0",
+  "description": "Pokemon Showdown Stats Chrome Extension",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/L1lith/Showdown-Stats.git"
+  },
+  "keywords": [
+    "showdown",
+    "stats",
+    "pokemon",
+    "chrome",
+    "extension",
+    "javascript"
+  ],
+  "author": "Lilith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/L1lith/Showdown-Stats/issues"
+  },
+  "homepage": "https://github.com/L1lith/Showdown-Stats#readme",
+  "dependencies": {
+    "copy-webpack-plugin": "^4.5.1"
+  }
+}
