@@ -18,6 +18,4 @@ function calculateStats(pokemon) {
   return output
 }
 
-window.calculateStats = calculateStats
-
 export default calculateStats
