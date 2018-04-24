@@ -12,7 +12,6 @@ function run() {
 window.addEventListener('load', ()=>{
   const script = document.createElement('script')
   script.type = 'text/javascript'
-  script.textContent = content
   let hasRun = false
   script.onload = () => {hasRun = hasRun || run() || true} // Protects from being called multiple times
   document.getElementsByTagName('head')[0].appendChild(script)
