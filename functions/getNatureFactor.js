@@ -1,6 +1,8 @@
 import NatureChart from '@data/natureChart.json'
 
-function getNatureFactor(nature, stat) {
+function getNatureFactor(pokemon, stat) {
+  const nature = pokemon.nature
+  if (typeof nature != 'string' || nature.length < 1 || stat === 'hp') return 1
   if (!NatureChart.hasOwnProperty(nature)) throw 'Invalid Nature'
   if (typeof stat != 'string' || stat.length < 1) throw 'Invalid Stat'
   stat = stat.toLowerCase()

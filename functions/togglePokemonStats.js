@@ -1,5 +1,4 @@
-import calculateHPStat from './calculateHPStat'
-import calculateStandardStat from './calculateStandardStat'
+import calculateStats from './calculateStats'
 import statStageToDecimal from './statStageToDecimal'
 import createElement from './createElement'
 import sortStats from './sortStats'
@@ -22,12 +21,11 @@ function togglePokemonStats(pokemon, statbar, side) {
     parent: stats,
     content: 'Stats'
   })
+  const calculatedStats = calculateStats(pokemon)
   sortStats(Object.keys(pokemon.baseStats)).forEach(stat => {
-    stat = stat.toLowerCase()
-    const statFactor = stat !== 'hp' && pokemon.boosts.hasOwnProperty(stat) ? statStageToDecimal(pokemon.boosts[stat]) : 1
-    if (statFactor === 'spd' && pokemon.status === 'par') statFactor *= window.room.battle.gen >= 7 ? 0.5 : 0.75
+    const {lowFinal, highFinal, modifier} = calculatedStats[stat]
     const statDiv = createElement('div', {
-      classes: ['stat', statFactor < 1 ? 'lowered' : statFactor > 1 ? 'raised' : undefined],
+      classes: ['stat', modifier < 1 ? 'lowered' : modifier > 1 ? 'raised' : undefined],
       parent: stats
     })
     const title = createElement('span', {
@@ -35,18 +33,10 @@ function togglePokemonStats(pokemon, statbar, side) {
       parent: statDiv,
       content: stat.toUpperCase()
     })
-    let statRange = []
-    if (stat === 'hp') {
-      statRange = [calculateHPStat(pokemon.baseStats[stat], pokemon.level),calculateHPStat(pokemon.baseStats[stat], pokemon.level, 255)]
-    } else {
-      statRange = [calculateStandardStat(pokemon.baseStats[stat], pokemon.level), calculateStandardStat(pokemon.baseStats[stat], pokemon.level, 255, typeof pokemon.nature == 'string' ? getNatureFactor(pokemon.nature, stat) : 1)]
-      statRange = statRange.map(value => value * statFactor)
-    }
-    statRange = statRange.map(value => Math.floor(value))
     const value = createElement('span', {
       class: 'value',
       below: title,
-      content: statRange[0].toString()+'-'+statRange[1].toString()
+      content: lowFinal.toString()+'-'+highFinal.toString()
     })
   })
   const effectiveness = createElement('div', {
