@@ -1,7 +1,7 @@
 {
     "name": "Showdown Stats",
     "description": "Allows you to view stats on Pokemon Showdown",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "permissions": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
     "content_scripts": [{
       "matches": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
