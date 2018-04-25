@@ -40,7 +40,7 @@ function togglePokemonStats(pokemon, statbar, side) {
       content: lowFinal.toString()+'-'+highFinal.toString()
     })
     console.log(stat, lowFinal)
-    const {backgroundColor, borderColor, width} = getStatColorWidth(stat, (lowFinal + highFinal) / 2
+    const {backgroundColor, borderColor, width} = getStatColorWidth(stat, Math.round(lowFinal + (highFinal - lowFinal) / 3))
     const bar = createElement('span', {
       class: 'bar',
       below: value,
