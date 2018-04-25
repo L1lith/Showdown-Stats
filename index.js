@@ -1,10 +1,7 @@
-import mutationWatcher from './functions/mutationWatcher'
-import setupExistingStatbars from './functions/setupExistingStatbars'
-import './functions/calculateStats'
+import setupMutationWatchers from './functions/setupMutationWatchers'
+import setupExistingBattleDivs from './functions/setupExistingBattleDivs'
 
-(new MutationObserver(mutationWatcher)).observe(document.body, {
-  childList: true,
-  subtree: true
-})
-setupExistingStatbars()
-console.log('Showdown Stats Running')
+setupMutationWatchers()
+setupExistingBattleDivs()
+
+console.log('Showdown Stats Running ass')

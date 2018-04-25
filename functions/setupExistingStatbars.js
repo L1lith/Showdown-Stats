@@ -1,7 +1,7 @@
 import setupStatbar from './setupStatbar'
 
-function setupExistingStatbars() {
-  Array.from(document.getElementsByClassName('statbar')).forEach(element => {
+function setupExistingStatbars(root=document) {
+  [...root.getElementsByClassName('statbar')].forEach(element => {
     setupStatbar(element)
   })
 }
