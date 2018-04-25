@@ -11,8 +11,8 @@ function calculateStats(pokemon) {
     const high = calc(31, [pokemon.baseStats[stat]], [252], pokemon.level, pokemon.nature || undefined)
     let modifier = stat !== 'hp' && pokemon.boosts.hasOwnProperty(stat) ? statStageToDecimal(pokemon.boosts[stat]) : 1
     if (stat === 'spd' && pokemon.status === 'par') modifier *= window.room.battle.gen >= 7 ? 0.5 : 0.75
-    const lowFinal = low * modifier
-    const highFinal = high * modifier
+    const lowFinal = Math.floor(low * modifier)
+    const highFinal = Math.floor(high * modifier)
     output[stat] = {low, high, modifier, lowFinal, highFinal, natureFactor: natureFactor || 1}
   })
   return output
