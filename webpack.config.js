@@ -1,4 +1,5 @@
 require('./setEnvironment')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
@@ -15,6 +16,7 @@ module.exports = {
     }
   },
   plugins: [
+    new UglifyJsPlugin(),
     new CopyWebpackPlugin([{ from: 'resources' }])
   ]
 }
