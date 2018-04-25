@@ -6,8 +6,9 @@ function getStatColorWidth(name, value) {
 	if (width > 75) width = 75
   let color = Math.floor(value * 180 / 714)
 	if (color > 360) color = 360
-  color = hslToHex(color,40,75)
-  return {color, width}
+  const backgroundColor = hslToHex(color,85,45)
+  const borderColor = hslToHex(color,85,35)
+  return {backgroundColor, borderColor, width}
 }
 
 export default getStatColorWidth

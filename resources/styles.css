@@ -6,7 +6,7 @@
   background-color: #ffffff78;
   width: max-content;
   z-index: 10000;
-  max-height: 150px;
+  max-height: 180px;
   overflow-y: auto;
 }
 .showdown-stats, .showdown-stats * {
@@ -15,6 +15,11 @@
 .showdown-stats > * {
   display: inline-block;
   float: left;
+}
+.showdown-stats .stat .bar {
+  display: block;
+  height: 5px;
+  border: 1px solid;
 }
 
 .showdown-stats > * > * > *:first-child {

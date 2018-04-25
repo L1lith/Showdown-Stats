@@ -13,6 +13,7 @@ function createElement(type = 'div', options = {}) {
       element.setAttribute(attribute, options.attributes[attribute])
     })
   }
+  if (typeof options.style == 'object' && options.style !== null) Object.assign(element.style, options.style)
   if (options.parent instanceof HTMLElement) {
     options.parent.appendChild(element)
   } else if (options.above instanceof HTMLElement) {

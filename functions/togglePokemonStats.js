@@ -3,6 +3,7 @@ import statStageToDecimal from './statStageToDecimal'
 import createElement from './createElement'
 import sortStats from './sortStats'
 import getEffectiveness from './getEffectiveness'
+import getStatColorWidth from './getStatColorWidth'
 
 function togglePokemonStats(pokemon, statbar, side) {
   const statDivs = Array.from(statbar.childNodes).filter(node => node.className.includes('stats'))
@@ -37,6 +38,17 @@ function togglePokemonStats(pokemon, statbar, side) {
       class: 'value',
       below: title,
       content: lowFinal.toString()+'-'+highFinal.toString()
+    })
+    console.log(stat, lowFinal)
+    const {backgroundColor, borderColor, width} = getStatColorWidth(stat, lowFinal)
+    const bar = createElement('span', {
+      class: 'bar',
+      below: value,
+      style: {
+        width: width.toString() +'px',
+        backgroundColor,
+        borderColor
+      }
     })
   })
   const effectiveness = createElement('div', {
