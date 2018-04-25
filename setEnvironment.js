@@ -4,4 +4,4 @@ const environment = args.p === true || args.prod === true || args.production ===
 
 process.env.NODE_ENV = environment
 
-module.exports = enviroment
+module.exports = environment
