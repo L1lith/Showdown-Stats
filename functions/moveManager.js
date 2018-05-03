@@ -19,7 +19,9 @@ export function update() {
   const opponent = room.battle.sides[1].active[0]
   moves.forEach(move => {
     [...move.getElementsByClassName('move-stats')].forEach(moveStats => moveStats.parentNode.removeChild(moveStats))
-    const {low, high} = estimateDamage(room.battle.sides[0].active[0], move, opponent)
+    const estimate = estimateDamage(room.battle.sides[0].active[0], move, opponent)
+    if (estimate === null) return
+    const {low, high} = estimate
     const moveStats = createElement('div', {
       class: 'move-stats',
       content: `${low}%-${high}%`,
