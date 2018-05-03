@@ -6,9 +6,12 @@ function estimateDamage(pokemon, moveElement, opponent) {
   const moveType = moveElement.getElementsByClassName('type')[0].textContent
   const moveName = moveElement.childNodes[0].textContent
   const moveData = moveList[moveName.toLowerCase()]
-  if (moveData.kind === 'status') return null
+
+  if (moveData === undefined || moveData.kind === 'status') return []
+
   let effectiveness = 1
   opponent.types.forEach(type => effectiveness *= TypeChart[type][moveType] || 1)
+
   const pokemonStats = calculateStats(pokemon)
   const opponentStats = calculateStats(opponent)
 
@@ -26,7 +29,7 @@ function estimateDamage(pokemon, moveElement, opponent) {
 
   const modifier = stab * effectiveness
 
-  return [lowDamage * modifier * 0.85, highDamage * modifier * 1].map(value => Math.floor(value))
+  return [lowDamage * modifier * 0.85, highDamage * modifier].map(value => Math.floor(value))
 }
 
 export default estimateDamage

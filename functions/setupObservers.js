@@ -1,7 +1,7 @@
 import statbarClicked from './statbarClicked'
 import hasClassName from './nodeFilters/hasClassName'
 import SuperObserver from './SuperObserver'
-import {setupMoves} from './moveManager'
+import {update, setupMoves} from './moveManager'
 
 function setupObservers() {
   const battleObserver = SuperObserver(document.body, node => typeof node.id == 'string' && node.id.startsWith('room-battle'))
@@ -17,6 +17,7 @@ function setupObservers() {
         if (action === 'added') {
           nodes.forEach(statbar => {
             statbar.addEventListener('click', statbarClicked.bind(null, statbar))
+            if (hasClassName(statbar, 'lstatbar')) update()
           })
         }
       })

@@ -13,7 +13,7 @@ export function setupMoves(nodes) {
   }
   update()
 }
-function update() {
+export function update() {
   if (moves === null || moves.length < 1) return
   const pokemon = room.battle.sides[0].active[0]
   const opponent = room.battle.sides[1].active[0]
