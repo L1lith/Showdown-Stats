@@ -1,7 +1,5 @@
-import setupMutationWatchers from './functions/setupMutationWatchers'
-import setupExistingBattleDivs from './functions/setupExistingBattleDivs'
+import setupObservers from './functions/setupObservers'
 
-setupMutationWatchers()
-setupExistingBattleDivs()
+setupObservers()
 
 console.log('Showdown Stats Running ass')
