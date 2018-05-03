@@ -1,9 +1,28 @@
-export function setupMove(node) {
-  console.log('setupMove', node)
+import getPokemonFromStatbar from './getPokemonFromStatbar'
+import estimateDamage from './estimateDamage'
+import createElement from './createElement'
+
+let moves = null
+
+export function setupMoves(nodes) {
+  if (!room || !room.battle || room.battle.gameType !== 'singles' ) return
+  if (moves === null || moves[0].parentNode !== nodes[0].parentNode) {
+    moves = nodes
+  } else {
+    moves.push(...nodes)
+  }
+  update()
 }
-export function removeMove(node) {
-  console.log('removeMove', node)
-}
-export function updateMoves(opponentStatbar) {
-  console.log('updateMoves', opponentStatbar)
+function update() {
+  if (moves === null || moves.length < 1) return
+  const pokemon = room.battle.sides[0].active[0]
+  const opponent = room.battle.sides[1].active[0]
+  moves.forEach(move => {
+    [...move.getElementsByClassName('move-stats')].forEach(moveStats => moveStats.parentNode.removeChild(moveStats))
+    const moveStats = createElement('div', {
+      class: 'move-stats',
+      content: estimateDamage(room.battle.sides[0].active[0], move, opponent).map(damage => damage.toString()).join('-'),
+      parent: move
+    })
+  })
 }
