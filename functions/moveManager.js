@@ -21,7 +21,7 @@ export function update() {
     [...move.getElementsByClassName('move-stats')].forEach(moveStats => moveStats.parentNode.removeChild(moveStats))
     const moveStats = createElement('div', {
       class: 'move-stats',
-      content: estimateDamage(room.battle.sides[0].active[0], move, opponent).map(damage => damage.toString()).join('-'),
+      content: estimateDamage(room.battle.sides[0].active[0], move, opponent).map(damage => damage.toString()+'%').join('-'),
       parent: move
     })
   })
