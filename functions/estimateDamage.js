@@ -16,7 +16,7 @@ function estimateDamage(pokemon, moveElement, opponent) {
   const opponentStats = calculateStats(opponent)
 
   const attackStat = pokemonStats[moveData.kind === 'physical' ? 'atk' : 'spa']
-  const defenseStat = pokemonStats[moveData.kind === 'physical' ? 'def' : 'spd']
+  const defenseStat = opponentStats[moveData.kind === 'physical' ? 'def' : 'spd']
 
   const stab = pokemon.types.includes(moveType) ? 1.5 : 1
 
