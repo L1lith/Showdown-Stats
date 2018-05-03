@@ -17,11 +17,12 @@ export function update() {
   if (moves === null || moves.length < 1) return
   const pokemon = room.battle.sides[0].active[0]
   const opponent = room.battle.sides[1].active[0]
+  const {low, high} = estimateDamage(room.battle.sides[0].active[0], move, opponent)
   moves.forEach(move => {
     [...move.getElementsByClassName('move-stats')].forEach(moveStats => moveStats.parentNode.removeChild(moveStats))
     const moveStats = createElement('div', {
       class: 'move-stats',
-      content: estimateDamage(room.battle.sides[0].active[0], move, opponent).map(damage => damage.toString()+'%').join('-'),
+      content: `${low}%-${high}%`,
       parent: move
     })
   })
