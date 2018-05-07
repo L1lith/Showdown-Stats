@@ -1,6 +1,7 @@
 import getPokemonFromStatbar from './getPokemonFromStatbar'
 import estimateDamage from './estimateDamage'
 import createElement from './createElement'
+import arrayUnique from './objectFunctions/arrayUnique'
 
 let moves = null
 
@@ -20,7 +21,7 @@ export function update() {
   if (pokemon === null || opponent === null) return
   moves.forEach(move => {
     [...move.getElementsByClassName('move-stats')].forEach(moveStats => moveStats.parentNode.removeChild(moveStats))
-    const estimate = estimateDamage(pokemon, move, opponent)
+    const estimate = arrayUnique(stimateDamage(pokemon, move, opponent))
     if (estimate === null) return
     const {low, high} = estimate
     const moveStats = createElement('div', {
