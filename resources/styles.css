@@ -1,6 +1,9 @@
 .showdown-stats, .statbar {
   z-index: 10000;
 }
+.r-statbar {
+  margin-left: 15px;
+}
 .showdown-stats {
   transform: translate(-20%);
   padding: 0px 5px 5px 5px;
