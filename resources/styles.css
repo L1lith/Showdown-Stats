@@ -1,7 +1,7 @@
 .showdown-stats, .statbar {
   z-index: 10000;
 }
-.r-statbar {
+.rstatbar {
   margin-left: 15px;
 }
 .showdown-stats {
