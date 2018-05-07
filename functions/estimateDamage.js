@@ -10,7 +10,10 @@ function estimateDamage(pokemon, moveElement, opponent) {
   if (moveData === undefined || moveData.kind === 'status') return null
 
   let effectiveness = 1
-  opponent.types.forEach(type => effectiveness *= TypeChart[type][moveType] || 1)
+  opponent.types.forEach(type => {
+    const typeEffectiveness = TypeChart[type][moveType]
+    if (typeof typeEffectiveness == 'number') effectiveness *= typeEffectiveness
+  })
 
   const pokemonStats = calculateStats(pokemon)
   const opponentStats = calculateStats(opponent)
