@@ -2,7 +2,7 @@ import calculateStats from './calculateStats'
 import statStageToDecimal from './statStageToDecimal'
 import createElement from './createElement'
 import sortStats from './sortStats'
-import getEffectiveness from './getEffectiveness'
+import {allEffectiveness} from './getEffectiveness'
 import getStatColorWidth from './getStatColorWidth'
 
 function togglePokemonStats(pokemon, statbar, side) {
@@ -58,7 +58,7 @@ function togglePokemonStats(pokemon, statbar, side) {
     parent: effectiveness,
     content: 'Effectiveness'
   })
-  const effectivenessChart = getEffectiveness(pokemon)
+  const effectivenessChart = allEffectiveness(pokemon)
   Object.keys(effectivenessChart).forEach(type => {
     const typeElement = createElement('div', {
       classes: ['type', 'times'+effectivenessChart[type].toString().replace('.','-')],

@@ -18,4 +18,8 @@ specialMoves.keys().forEach(filePath => {
   output[required.name] = required
 })
 
-module.exports = Object.assign({}, output, {__esModule: true, default: output})
+const singleImports = {}
+
+Object.keys(output).forEach(moveName => singleImports[moveName.split(' ').join('')] = output[moveName])
+
+module.exports = Object.assign({}, singleImports, {__esModule: true, default: output})

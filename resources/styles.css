@@ -1,8 +1,5 @@
-#tooltipwrapper {
-  z-index: 20000;
-}
 .showdown-stats, .statbar {
-  z-index: 10000;
+  z-index: 10;
 }
 .rstatbar {
   margin-left: 15px;

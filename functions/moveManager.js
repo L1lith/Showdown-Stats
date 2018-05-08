@@ -21,12 +21,11 @@ export function update() {
   if (pokemon === null || opponent === null) return
   moves.forEach(move => {
     [...move.getElementsByClassName('move-stats')].forEach(moveStats => moveStats.parentNode.removeChild(moveStats))
-    const estimate = arrayUnique(estimateDamage(pokemon, move, opponent))
+    const estimate = estimateDamage(pokemon, move, opponent)
     if (estimate === null) return
-    const {low, high} = estimate
     const moveStats = createElement('div', {
       class: 'move-stats',
-      content: `${low}%-${high}%`,
+      content: arrayUnique(estimate).sort((a, b) => a - b).map(value => value+'%').join('-'),
       parent: move
     })
   })
