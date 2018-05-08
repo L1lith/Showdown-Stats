@@ -2,6 +2,7 @@ import TypeChart from '@data/typeChart.json'
 import moveList from '@data/moveList.json'
 import calculateStats from './calculateStats'
 import {singleEffectiveness} from './getEffectiveness'
+import specialMoves from './specialMoves'
 
 function estimateDamage(pokemon, moveElement, opponent) {
   const moveType = moveElement.getElementsByClassName('type')[0].textContent
@@ -9,6 +10,8 @@ function estimateDamage(pokemon, moveElement, opponent) {
   const moveData = moveList[moveName.toLowerCase()]
 
   if (moveData === undefined || moveData.kind === 'status') return null
+
+  const specialMove = specialMoves[moveName]
 
   const effectiveness = singleEffectiveness(pokemon, moveType)
 
@@ -22,10 +25,15 @@ function estimateDamage(pokemon, moveElement, opponent) {
 
   const levelDamage = ((2 * pokemon.level) / 5) + 2
 
-  const power = moveData.power
+  let lowPower = specialMove && specialMove.kind === 'base' ? specialMove.calculate(pokemon, opponent, window.room) : moveData.power
+  let highPower = lowPower
 
-  const lowDamage = ((levelDamage * power * (attackStat.lowFinal / defenseStat.highFinal)) / 50) + 2
-  const highDamage = ((levelDamage * power * (attackStat.highFinal / defenseStat.lowFinal)) / 50) + 2
+  if (specialMove && specialMove.kind === 'baserange') [lowPower, highPower] = specialMove.calculate(pokemon, opponent, window.room)
+
+  const lowDamage = ((levelDamage * lowPower * (attackStat.lowFinal / defenseStat.highFinal)) / 50) + 2
+  const highDamage = ((levelDamage * highPower * (attackStat.highFinal / defenseStat.lowFinal)) / 50) + 2
+
+  console.log({lowDamage, highDamage})
 
   const modifier = stab * effectiveness
 
