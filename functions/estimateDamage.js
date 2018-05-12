@@ -12,6 +12,9 @@ function estimateDamage(pokemon, moveElement, opponent) {
   if (moveData === undefined || moveData.kind === 'status') return null
 
   const specialMove = specialMoves[moveName]
+  
+  if (specialMove && typeof specialMove.exact == 'function') return specialMove.exact()
+
   const effectiveness = singleEffectiveness(opponent, moveType)
 
   const pokemonStats = calculateStats(pokemon)
