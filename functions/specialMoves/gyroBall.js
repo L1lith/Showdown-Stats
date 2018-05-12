@@ -9,4 +9,4 @@ function gyroBall(pokemon, opponent, room){
   return [lowDamage, highDamage].map(value => Math.min(value * 25, 150))
 }
 
-export default {name: 'Gyro Ball', kind: 'baserange', calculate: gyroBall}
+export default {name: 'Gyro Ball', baserange: gyroBall}

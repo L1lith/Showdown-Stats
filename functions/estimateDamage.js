@@ -20,19 +20,17 @@ function estimateDamage(pokemon, moveElement, opponent) {
   const attackStat = pokemonStats[moveData.kind === 'physical' ? 'atk' : 'spa']
   const defenseStat = opponentStats[moveData.kind === 'physical' ? 'def' : 'spd']
 
-  const stab = pokemon.types.includes(moveType) ? 1.5 : 1
+  const stab = specialMove && specialMove.hasOwnProperty('stab') && specialMove.stab() === true ? 1.5 : pokemon.types.includes(moveType) ? 1.5 : 1
 
   const levelDamage = ((2 * pokemon.level) / 5) + 2
 
-  let lowPower = specialMove && specialMove.kind === 'base' ? specialMove.calculate(pokemon, opponent, window.room) : moveData.power
+  let lowPower = specialMove && typeof specialMove.base == 'function' ? specialMove.base(pokemon, opponent, window.room) : moveData.power
   let highPower = lowPower
 
-  if (specialMove && specialMove.kind === 'baserange') [lowPower, highPower] = specialMove.calculate(pokemon, opponent, window.room)
+  if (specialMove && typeof specialMove.base == 'function' ) [lowPower, highPower] = specialMove.baserange(pokemon, opponent, window.room)
 
   const lowDamage = ((levelDamage * lowPower * (attackStat.lowFinal / defenseStat.highFinal)) / 50) + 2
   const highDamage = ((levelDamage * highPower * (attackStat.highFinal / defenseStat.lowFinal)) / 50) + 2
-
-  console.log({lowDamage, highDamage})
 
   const modifier = stab * effectiveness
 
