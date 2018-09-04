@@ -2,6 +2,7 @@ import getPokemonFromStatbar from './getPokemonFromStatbar'
 import estimateDamage from './estimateDamage'
 import createElement from './createElement'
 import arrayUnique from './objectFunctions/arrayUnique'
+import indexOfMax from './indexOfMax'
 
 let moves = null
 
@@ -19,9 +20,13 @@ export function update() {
   const pokemon = room.battle.sides[0].active[0]
   const opponent = room.battle.sides[1].active[0]
   if (pokemon === null || opponent === null) return
-  moves.forEach(move => {
+  const damageEstimates = []
+  moves.forEach((move, index) => {
     [...move.getElementsByClassName('move-stats')].forEach(moveStats => moveStats.parentNode.removeChild(moveStats))
     const estimate = estimateDamage(pokemon, move, opponent)
+    const classes = [...move.classList]
+    if (classes.includes('strongest-move')) classes.remove('strongest-move')
+    damageEstimates[index] = estimate || 0
     if (estimate === null) return
     const moveStats = createElement('div', {
       class: 'move-stats',
@@ -29,4 +34,9 @@ export function update() {
       parent: move
     })
   })
+  if (!damageEstimates.every(estimate => estimate === 0)) {
+    const strongestMove = moves[indexOfMax(damageEstimates)]
+    strongestMove.classList.add('strongest-move')
+  }
+
 }
