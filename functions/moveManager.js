@@ -25,8 +25,9 @@ export function update() {
     [...move.getElementsByClassName('move-stats')].forEach(moveStats => moveStats.parentNode.removeChild(moveStats))
     const estimate = estimateDamage(pokemon, move, opponent)
     const classes = [...move.classList]
-    if (classes.includes('strongest-move')) classes.remove('strongest-move')
-    damageEstimates[index] = estimate || 0
+    if (classes.includes('strongest-move')) move.classList.remove('strongest-move')
+    damageEstimates[index] = estimate || [0, 0]
+    damageEstimates[index] = (damageEstimates[index][0] + damageEstimates[index][1]) / 2
     if (estimate === null) return
     const moveStats = createElement('div', {
       class: 'move-stats',
