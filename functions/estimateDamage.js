@@ -37,7 +37,7 @@ function estimateDamage(pokemon, moveElement, opponent) {
 
   const modifier = stab * effectiveness
 
-  console.log({lowDamage, highDamage, modifier, levelDamage, stab, attackStat, defenseStat, effectiveness, moveElement})
+  //console.log({lowDamage, highDamage, modifier, levelDamage, stab, attackStat, defenseStat, effectiveness, moveElement})
 
   return [Math.floor((lowDamage * modifier * 0.85) / opponentStats.hp.highFinal * 100), Math.floor((highDamage * modifier) / opponentStats.hp.lowFinal * 100)]
 }
