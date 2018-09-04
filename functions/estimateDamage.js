@@ -12,7 +12,7 @@ function estimateDamage(pokemon, moveElement, opponent) {
   if (moveData === undefined || moveData.kind === 'status') return null
 
   const specialMove = specialMoves[moveName]
-  
+
   if (specialMove && typeof specialMove.exact == 'function') return specialMove.exact()
 
   const effectiveness = singleEffectiveness(opponent, moveType)
@@ -36,6 +36,8 @@ function estimateDamage(pokemon, moveElement, opponent) {
   const highDamage = ((levelDamage * highPower * (attackStat.highFinal / defenseStat.lowFinal)) / 50) + 2
 
   const modifier = stab * effectiveness
+
+  console.log({lowDamage, highDamage, modifier, levelDamage, stab, attackStat, defenseStat, effectiveness, moveElement})
 
   return [Math.floor((lowDamage * modifier * 0.85) / opponentStats.hp.highFinal * 100), Math.floor((highDamage * modifier) / opponentStats.hp.lowFinal * 100)]
 }
