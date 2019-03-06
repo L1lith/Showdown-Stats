@@ -4,6 +4,7 @@
   "description": "Pokemon Showdown Stats Chrome Extension",
   "main": "index.js",
   "scripts": {
+    "build-chrome": "webpack --config ./source/chrome/webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,7 +31,8 @@
   "devDependencies": {
     "copy-webpack-plugin": "^4.5.1",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^2.5.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
     "yargs": "^11.0.0"
   }
 }
