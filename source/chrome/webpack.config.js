@@ -1,18 +1,20 @@
 require('./setEnvironment')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const path = require('path')
+const {join} = require('path')
+
+const coreDirectory = join(__dirname, '..', 'core')
 
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  entry: './index.js',
+  entry: join(coreDirectory, 'index.js'),
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: join(__dirname, 'build'),
     filename: 'build.js'
   },
   resolve: {
     alias: {
-      '@data': path.resolve(__dirname,'data')
+      '@data': join(coreDirectory, 'data')
     }
   },
   plugins: [
@@ -31,6 +33,6 @@ module.exports = {
         }
       }
     }),
-    new CopyWebpackPlugin([{ from: 'resources' }])
+    new CopyWebpackPlugin([{ from: join(__dirname, 'resources') }])
   ]
 }
