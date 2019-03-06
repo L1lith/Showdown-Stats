@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/L1lith/Showdown-Stats#readme",
   "dependencies": {
-    "pokemon-stat-calculator": "^0.3.0",
+    "pokemon-stat-calculator": "^0.3.0"
   },
-  "dev-dependencies": {
+  "devDependencies": {
     "copy-webpack-plugin": "^4.5.1",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^2.5.1",
