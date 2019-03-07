@@ -9,8 +9,5 @@
       "css": ["styles.css"]
     }],
     "web_accessible_resources" : ["build.js"],
-    "manifest_version": 2,
-    "applications": {
-      
-    }
+    "manifest_version": 2
 }
