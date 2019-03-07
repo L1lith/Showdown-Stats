@@ -1,11 +1,10 @@
 {
     "name": "Showdown Stats",
     "description": "Allows you to view stats on Pokemon Showdown",
-    "version": "1.1.6",
+    "version": "1.1.7",
     "icons": {
     "48": "icons/48.png"
     },
-    "default_locale": "en",
     "permissions": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
     "content_scripts": [{
       "matches": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
