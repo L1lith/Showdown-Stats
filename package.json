@@ -4,8 +4,9 @@
   "description": "Pokemon Showdown Stats Chrome Extension",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config ./source/webExtension/webpack.config.js",
-    "build-firefox": "npm run-script build && cp -R ./build/webExtension ./build/firefoxExtension && cp -R ./source/webExtension/resources/ ./build/firefoxExtension/ && cp -R ./source/core/ ./build/firefoxExtension/ && cp ./package.json ./build/firefoxExtension/package.json && cd build/firefoxExtension && zip -r \"../showdownStats-firefox.zip\" .",
+    "build": "webpack --config ./source/webExtension/webpack.config.js && cd ./build/webExtension && zip -r \"../webExtension.zip\" . && cd .. && rm -rf ./webExtension/",
+    "build-source": "cp -R ./source ./build/source && cp ./package.json ./build/source/package.json && rm -rf ./build/source/aseprite && cd ./build/source && zip -r \"../source.zip\" . && cd ../.. && rm -rf ./build/source/",
+    "build-firefox": "npm run-script build && npm run-script build-source",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
