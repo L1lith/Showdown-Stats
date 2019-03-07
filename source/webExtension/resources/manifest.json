@@ -5,6 +5,7 @@
     "icons": {
     "48": "icons/48.png"
     },
+    "default_locale": "en",
     "permissions": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
     "content_scripts": [{
       "matches": ["*://pokemonshowdown.com/*", "*://*.pokemonshowdown.com/*"],
