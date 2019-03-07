@@ -9,7 +9,7 @@ module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: join(coreDirectory, 'index.js'),
   output: {
-    path: join(__dirname, '../../build/chrome'),
+    path: join(__dirname, '../../build/webExtension'),
     filename: 'build.js'
   },
   resolve: {
