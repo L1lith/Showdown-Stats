@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./source/webExtension/webpack.config.js",
-    "build-firefox": "npm run-script build && cp -R ./build/webExtension ./build/firefoxExtension && cp -R ./source/webExtension/resources/ ./build/firefoxExtension/ && cp -R ./source/core/ ./build/firefoxExtension/ && cp ./package.json ./build/firefoxExtension/package.json && zip -r \"./build/showdownStats-firefox.zip\" ./build/firefoxExtension",
+    "build-firefox": "npm run-script build && cp -R ./build/webExtension ./build/firefoxExtension && cp -R ./source/webExtension/resources/ ./build/firefoxExtension/ && cp -R ./source/core/ ./build/firefoxExtension/ && cp ./package.json ./build/firefoxExtension/package.json && cd build/firefoxExtension && zip -r \"../showdownStats-firefox.zip\" .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
