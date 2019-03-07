@@ -1,6 +1,8 @@
 # Showdown Stats
 Chrome extension for viewing pokemon's stats on Pokemon Showdown.
-### [Install Here](https://chrome.google.com/webstore/detail/showdown-stat-tool/nlcmcfpnhnkmfbnadjkladafdjineipp)
+### [Install Here on Chrome](https://chrome.google.com/webstore/detail/showdown-stat-tool/nlcmcfpnhnkmfbnadjkladafdjineipp)
+
+### [Install Here on Firefox](https://addons.mozilla.org/en-US/firefox/addon/showdown-stats/)
 
 ## Usage
 
