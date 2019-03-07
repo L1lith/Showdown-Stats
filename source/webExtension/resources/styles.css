@@ -10,7 +10,9 @@
   border-radius: 5px;
   margin-top: 10px;
   background-color: #ffffff78;
+  width: 200px;
   width: max-content;
+  text-align: center;
   z-index: 10000;
   max-height: 180px;
   overflow-y: auto;
@@ -19,8 +21,14 @@
   border: none !important;
 }
 .showdown-stats > * {
+  max-width: 50%;
   display: inline-block;
+}
+.showdown-stats .stats {
   float: left;
+}
+.showdown-status .effectiveness {
+  float: right;
 }
 .showdown-stats .stat .bar {
   display: block;
